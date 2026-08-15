@@ -1,6 +1,7 @@
-import { useNavigate } from "react-router-dom";
+
 
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../services/api";
 
 function Login() {
@@ -65,6 +66,18 @@ function Login() {
             <button onClick={handleLogin}>
                 Login
             </button>
+
+
+
+        <p>
+    Don't have an account?
+
+    <Link to="/signup">
+        Sign Up
+    </Link>
+</p>
+
+
 
         </div>
 

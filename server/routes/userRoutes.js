@@ -4,6 +4,8 @@ const authMiddleware = require("../middleware/authMiddleware");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
+const Notification = require("../models/Notification");
+
 const express = require("express");
 const router = express.Router();
 
@@ -166,12 +168,37 @@ router.post("/send-request/:userId", authMiddleware, async (req, res) => {
         }
 
         // 3. Create request
-        const request = await ConnectionRequest.create({
-            fromUserId: req.user.id,
-            toUserId: req.params.userId
-        });
+        // const request = await ConnectionRequest.create({
+        //     fromUserId: req.user.id,
+        //     toUserId: req.params.userId
+        // });
 
-        res.status(201).json(request);
+        // res.status(201).json(request);
+
+      
+          // 3. Create request
+const request = await ConnectionRequest.create({
+    fromUserId: req.user.id,
+    toUserId: req.params.userId
+});
+
+// 4. Get sender information
+const sender = await User.findById(req.user.id);
+
+// 5. Create notification
+await Notification.create({
+
+    userId: req.params.userId,
+
+    message: `${sender.name} sent you a connection request`,
+
+    relatedUserId: req.user.id
+
+});
+
+res.status(201).json(request);
+
+
 
     } catch (error) {
 
@@ -294,5 +321,131 @@ router.get("/connections", authMiddleware, async (req, res) => {
     }
 
 });
+
+
+
+
+
+// router.get("/discover", authMiddleware, async (req, res) => {
+
+//     try {
+
+//         const users = await User.find({
+//             _id: { $ne: req.user.id }
+//         }).select("-password");
+
+//         res.json(users);
+
+//     } catch (error) {
+
+//         res.status(500).json({
+//             message: "Server Error"
+//         });
+
+//     }
+
+// });
+
+
+router.get("/discover", authMiddleware, async (req, res) => {
+
+    try {
+
+        const users = await User.find({
+            _id: { $ne: req.user.id }
+        }).select("-password");
+
+        const requests = await ConnectionRequest.find({
+            $or: [
+                { fromUserId: req.user.id },
+                { toUserId: req.user.id }
+            ]
+        });
+
+        const result = users.map((user) => {
+
+            const request = requests.find((r) => {
+
+                return (
+                    r.fromUserId.toString() === req.user.id &&
+                    r.toUserId.toString() === user._id.toString()
+                ) ||
+                (
+                    r.toUserId.toString() === req.user.id &&
+                    r.fromUserId.toString() === user._id.toString()
+                );
+
+            });
+
+            let connectionStatus = "none";
+
+            if (request) {
+
+                if (request.status === "accepted") {
+                    connectionStatus = "connected";
+                }
+
+                else if (
+                    request.status === "pending" &&
+                    request.fromUserId.toString() === req.user.id
+                ) {
+                    connectionStatus = "sent";
+                }
+
+                else if (
+                    request.status === "pending" &&
+                    request.toUserId.toString() === req.user.id
+                ) {
+                    connectionStatus = "received";
+                }
+
+            }
+
+            return {
+                ...user.toObject(),
+                connectionStatus
+            };
+
+        });
+
+        res.status(200).json(result);
+
+    } catch (error) {
+
+        res.status(500).json({
+            message: error.message
+        });
+
+    }
+
+});
+
+
+
+router.get("/notifications", authMiddleware, async (req, res) => {
+
+    try {
+
+        const notifications = await Notification.find({
+            userId: req.user.id
+        }).sort({ createdAt: -1 });
+
+        res.status(200).json(notifications);
+
+    } catch (error) {
+
+        res.status(500).json({
+            message: error.message
+        });
+
+    }
+
+});
+
+
+
+
+
+
 
 module.exports = router;
