@@ -52,70 +52,96 @@ function Signup() {
 
     return (
 
-        <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen bg-slate-950 flex items-center justify-center px-4">
+
+        <div className="w-full max-w-md">
+
+            <div className="text-center mb-8">
+
+                <h1 className="text-4xl font-bold text-white">
+                    Idea<span className="text-violet-400">Match</span>
+                </h1>
+
+                <p className="text-slate-400 mt-2">
+                    Find people who actually want to build things.
+                </p>
+
+            </div>
 
             <form
                 onSubmit={handleSubmit}
-                className="bg-white p-8 rounded-xl shadow-md w-96"
+                className="bg-slate-900 border border-slate-800 p-8 rounded-2xl shadow-2xl"
             >
 
-                <h1 className="text-3xl font-bold mb-6 text-center">
-                    Sign Up
-                </h1>
+                <h2 className="text-2xl font-semibold text-white mb-1">
+                    Create your account
+                </h2>
 
-                <input
-                    type="text"
-                    name="name"
-                    placeholder="Name"
-                    onChange={handleChange}
-                    className="w-full border p-3 rounded mb-3"
-                />
+                <p className="text-slate-400 text-sm mb-6">
+                    Your next project partner might be one signup away.
+                </p>
 
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    onChange={handleChange}
-                    className="w-full border p-3 rounded mb-3"
-                />
 
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    onChange={handleChange}
-                    className="w-full border p-3 rounded mb-3"
-                />
+                <div className="space-y-4">
 
-                <input
-                    type="text"
-                    name="bio"
-                    placeholder="Bio"
-                    onChange={handleChange}
-                    className="w-full border p-3 rounded mb-3"
-                />
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Full name"
+                        onChange={handleChange}
+                        className="w-full bg-slate-800 border border-slate-700 text-white placeholder-slate-500 p-3 rounded-lg outline-none focus:border-violet-500"
+                    />
 
-                <input
-                    type="text"
-                    name="interests"
-                    placeholder="React, Node, Java"
-                    onChange={handleChange}
-                    className="w-full border p-3 rounded mb-6"
-                />
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Email address"
+                        onChange={handleChange}
+                        className="w-full bg-slate-800 border border-slate-700 text-white placeholder-slate-500 p-3 rounded-lg outline-none focus:border-violet-500"
+                    />
+
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        onChange={handleChange}
+                        className="w-full bg-slate-800 border border-slate-700 text-white placeholder-slate-500 p-3 rounded-lg outline-none focus:border-violet-500"
+                    />
+
+                    <input
+                        type="text"
+                        name="bio"
+                        placeholder="A short bio"
+                        onChange={handleChange}
+                        className="w-full bg-slate-800 border border-slate-700 text-white placeholder-slate-500 p-3 rounded-lg outline-none focus:border-violet-500"
+                    />
+
+                    <input
+                        type="text"
+                        name="interests"
+                        placeholder="Interests: React, Node, Java"
+                        onChange={handleChange}
+                        className="w-full bg-slate-800 border border-slate-700 text-white placeholder-slate-500 p-3 rounded-lg outline-none focus:border-violet-500"
+                    />
+
+                </div>
+
 
                 <button
-                    className="w-full bg-blue-600 text-white p-3 rounded"
+                    type="submit"
+                    className="w-full mt-6 bg-violet-600 hover:bg-violet-500 text-white font-semibold p-3 rounded-lg transition"
                 >
                     Create Account
                 </button>
 
-                <p className="text-center mt-4">
+
+                <p className="text-center text-slate-400 text-sm mt-6">
 
                     Already have an account?
 
                     <Link
                         to="/"
-                        className="text-blue-600 ml-2"
+                        className="text-violet-400 hover:text-violet-300 ml-2 font-medium"
                     >
                         Login
                     </Link>
@@ -124,10 +150,15 @@ function Signup() {
 
             </form>
 
+            <p className="text-center text-slate-600 text-xs mt-6">
+                Build something. Find someone. Ship it.
+            </p>
+
         </div>
 
-    );
+    </div>
 
+);
 }
 
 export default Signup;
