@@ -9,6 +9,8 @@ const Message = require("./models/message");
 const connectDB = require("./config/db");
 
 const userRoutes = require("./routes/userRoutes");
+const postRoutes = require("./routes/postRoutes");
+
 const messageRoutes = require("./routes/messageRoutes");
 
 const app = express();
@@ -52,6 +54,8 @@ app.get("/", (req, res) => {
 // ===============================
 
 app.use("/api/users", userRoutes);
+app.use("/api/posts", postRoutes);
+
 app.use("/api/messages", messageRoutes);
 
 // ===============================

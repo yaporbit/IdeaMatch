@@ -8,8 +8,11 @@ import Discover from "./pages/Discover";
 import Connections from "./pages/Connections";
 import Chat from "./pages/Chat";
 import PendingRequests from "./pages/PendingRequests";
+import Posts from "./pages/Posts";
 
 import ProtectedRoute from "./components/ProtectedRoute";
+
+
 
 function App() {
     return (
@@ -73,6 +76,8 @@ function App() {
                     </ProtectedRoute>
                 }
             />
+
+               <Route path="/posts" element={<Posts />} />
 
         </Routes>
     );

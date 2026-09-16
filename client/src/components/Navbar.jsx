@@ -47,6 +47,9 @@ function Navbar() {
                         Connections
                     </Link>
 
+               <Link to="/posts">Posts</Link>
+
+
                     <Link
                         to="/pending"
                         className="text-sm font-medium text-slate-600 transition hover:text-blue-600"
